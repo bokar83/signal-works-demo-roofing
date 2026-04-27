@@ -15,13 +15,6 @@
       font-family: "DM Sans", sans-serif;
     }
 
-    /*
-      Palette:
-        bg:       #0c0c0c
-        fg:       #f5f5f2
-        accent:   #F4600C  (roofing site orange)
-    */
-
     .scene {
       position: absolute;
       top: 0; left: 0;
@@ -31,7 +24,6 @@
       background: #0c0c0c;
     }
 
-    /* Scene 1 visible by default; all others opacity:0 */
     #scene1 { z-index: 1; }
     #scene2 { z-index: 2; opacity: 0; }
     #scene3 { z-index: 3; opacity: 0; }
@@ -48,30 +40,42 @@
       display: block;
     }
 
-    /* Top gradient bar that holds overlay text */
-    .overlay-bar {
+    /* ── Frosted pill: lifts text cleanly off any background ── */
+    .pill {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      padding: 52px 160px 64px;
-      background: linear-gradient(180deg, rgba(12,12,12,0.85) 55%, rgba(12,12,12,0) 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10,10,10,0.72);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      padding: 28px 56px;
+      max-width: 1440px;
+      width: max-content;
     }
 
-    .overlay-headline {
+    /* S1, S3 — top of frame */
+    #s1-pill { top: 44px; }
+    #s3-pill { top: 44px; }
+
+    /* S2, S4 — bottom of frame (above accent rule) */
+    #s2-pill { bottom: 32px; }
+    #s4-pill { bottom: 32px; }
+
+    .pill-hl {
       font-family: "DM Sans", sans-serif;
       font-weight: 900;
-      font-size: 66px;
-      line-height: 1.12;
+      font-size: 62px;
+      line-height: 1.1;
       letter-spacing: -0.03em;
       color: #f5f5f2;
       text-align: center;
-      max-width: 1400px;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.75);
+      text-shadow: 0 1px 0 rgba(0,0,0,0.5);
     }
 
-    /* Orange accent line at bottom of each scene */
+    /* S2: orange accent on a key word */
+    .hl-accent { color: #F4600C; }
+
+    /* Orange accent bar — bottom of scene */
     .accent-rule {
       position: absolute;
       bottom: 0; left: 0;
@@ -81,21 +85,27 @@
       transform-origin: left center;
     }
 
-    /* Scene 5 CTA — centered lockup, no top-anchored bar */
-    #scene5 .overlay-bar {
+    /* ── Scene 3: word-split for staggered animation ── */
+    .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .word-inner { display: inline-block; }
+
+    /* ── Scene 5: centered CTA ── */
+    #scene5 .cta-wrap {
+      position: absolute;
       top: 50%;
-      left: 0; right: 0;
-      transform: translateY(-50%);
-      background: none;
-      padding: 0 200px;
-      gap: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      gap: 0;
+      width: 1400px;
     }
 
     .cta-brand {
       font-family: "DM Sans", sans-serif;
       font-weight: 900;
-      font-size: 104px;
+      font-size: 112px;
       letter-spacing: -0.04em;
       color: #F4600C;
       text-align: center;
@@ -103,26 +113,31 @@
       line-height: 1;
     }
 
+    .cta-divider {
+      width: 80px;
+      height: 3px;
+      background: #F4600C;
+      margin: 28px auto 28px;
+      transform-origin: center;
+    }
+
     .cta-tagline {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 400;
-      font-size: 44px;
-      line-height: 1.35;
+      font-size: 46px;
+      line-height: 1.32;
       color: #f5f5f2;
       text-align: center;
-      max-width: 1100px;
-      margin-top: 28px;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.85);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.9);
     }
 
     .cta-sub {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 400;
       font-size: 28px;
-      color: rgba(245,245,242,0.52);
+      color: rgba(245,245,242,0.48);
       text-align: center;
-      margin-top: 20px;
-      letter-spacing: 0.005em;
+      margin-top: 22px;
     }
   </style>
 </head>
@@ -137,50 +152,53 @@
   data-duration="22"
 >
 
-  <!-- ════ SCENE 1 — hero, 0–4s ══════════════════════════════ -->
+  <!-- ════ SCENE 1 — hero, TOP pill, slides down ══════════════ -->
   <div id="scene1" class="scene">
     <img class="bg-shot" src="01-hero.png" alt="" />
-    <div class="overlay-bar" id="s1-bar">
-      <div class="overlay-headline" id="s1-hl">When did you last search for your own business on ChatGPT?</div>
+    <div class="pill" id="s1-pill">
+      <div class="pill-hl" id="s1-hl">When did you last search for your own business on ChatGPT?</div>
     </div>
     <div class="accent-rule" id="s1-rule"></div>
   </div>
 
-  <!-- ════ SCENE 2 — stats, 4.1–7.5s ════════════════════════ -->
+  <!-- ════ SCENE 2 — stats, BOTTOM pill, slides up ════════════ -->
   <div id="scene2" class="scene">
     <img class="bg-shot" src="05-stats.png" alt="" />
-    <div class="overlay-bar" id="s2-bar">
-      <div class="overlay-headline" id="s2-hl">Most roofers in Salt Lake City are invisible to AI search.</div>
+    <div class="pill" id="s2-pill">
+      <div class="pill-hl" id="s2-hl">Most roofers here are <span class="hl-accent">invisible</span> to AI search.</div>
     </div>
     <div class="accent-rule" id="s2-rule"></div>
   </div>
 
-  <!-- ════ SCENE 3 — services, 7.7–12s ══════════════════════ -->
+  <!-- ════ SCENE 3 — services, TOP pill, word stagger ═════════ -->
   <div id="scene3" class="scene">
     <img class="bg-shot" src="02-services.png" alt="" />
-    <div class="overlay-bar" id="s3-bar">
-      <div class="overlay-headline" id="s3-hl">We build the infrastructure that makes AI recommend YOU.</div>
+    <div class="pill" id="s3-pill">
+      <div class="pill-hl" id="s3-hl">
+        <span class="word"><span class="word-inner" id="w1">We</span></span>&nbsp;<span class="word"><span class="word-inner" id="w2">build</span></span>&nbsp;<span class="word"><span class="word-inner" id="w3">the</span></span>&nbsp;<span class="word"><span class="word-inner" id="w4">infrastructure</span></span>&nbsp;<span class="word"><span class="word-inner" id="w5">that</span></span>&nbsp;<span class="word"><span class="word-inner" id="w6">makes</span></span>&nbsp;<span class="word"><span class="word-inner" id="w7">AI</span></span>&nbsp;<span class="word"><span class="word-inner" id="w8">recommend</span></span>&nbsp;<span class="word"><span class="word-inner" id="w9" style="color:#F4600C;">YOU.</span></span>
+      </div>
     </div>
     <div class="accent-rule" id="s3-rule"></div>
   </div>
 
-  <!-- ════ SCENE 4 — trust, 12.1–16.5s ══════════════════════ -->
+  <!-- ════ SCENE 4 — trust, BOTTOM pill, scales in ════════════ -->
   <div id="scene4" class="scene">
     <img class="bg-shot" src="03-trust.png" alt="" />
-    <div class="overlay-bar" id="s4-bar">
-      <div class="overlay-headline" id="s4-hl">Your reviews exist. AI just can't find them yet.</div>
+    <div class="pill" id="s4-pill">
+      <div class="pill-hl" id="s4-hl">Your reviews exist. AI just <span class="hl-accent">can't find them</span> yet.</div>
     </div>
     <div class="accent-rule" id="s4-rule"></div>
   </div>
 
-  <!-- ════ SCENE 5 — CTA, 16.6–22s ══════════════════════════ -->
+  <!-- ════ SCENE 5 — CTA, centered, stacked ══════════════════ -->
   <div id="scene5" class="scene">
     <img class="bg-shot" src="04-cta.png" alt="" />
-    <div style="position:absolute;inset:0;background:rgba(12,12,12,0.75);"></div>
-    <div class="overlay-bar" id="s5-bar">
-      <div class="cta-brand" id="s5-brand">Signal Works</div>
+    <div style="position:absolute;inset:0;background:rgba(12,12,12,0.78);"></div>
+    <div class="cta-wrap" id="s5-wrap">
+      <div class="cta-brand"   id="s5-brand">Signal Works</div>
+      <div class="cta-divider" id="s5-div"></div>
       <div class="cta-tagline" id="s5-tagline">We make your business the one AI recommends.</div>
-      <div class="cta-sub" id="s5-sub">Setup from $500 &nbsp;&bull;&nbsp; Book a free visibility check</div>
+      <div class="cta-sub"     id="s5-sub">Setup from $500 &nbsp;&bull;&nbsp; Book a free visibility check</div>
     </div>
     <div class="accent-rule" id="s5-rule"></div>
   </div>
@@ -191,59 +209,69 @@
 window.__timelines = window.__timelines || {};
 var tl = gsap.timeline({ paused: true });
 
-/* ── SCENE 1: fade in from black, then headline + rule enter ── */
+/* ─── SCENE 1: fade in, pill slides DOWN from above ─────────── */
 tl.fromTo("#scene1", { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power2.out" }, 0);
-tl.from("#s1-hl",   { y: -30, opacity: 0, duration: 0.65, ease: "expo.out" }, 0.45);
-tl.from("#s1-rule", { scaleX: 0, duration: 0.9, ease: "power3.out" }, 0.65);
+tl.from("#s1-pill", { y: -90, opacity: 0, duration: 0.75, ease: "expo.out" }, 0.4);
+tl.from("#s1-hl",   { opacity: 0, duration: 0.4, ease: "power2.out" }, 0.55);
+tl.from("#s1-rule", { scaleX: 0, duration: 0.9, ease: "power3.out" }, 0.6);
 
-/* ── TRANSITION 1→2: blur crossfade at t=3.55 ────────────── */
+/* ─── TRANSITION 1→2: blur crossfade at t=3.55 ─────────────── */
 var T12 = 3.55;
-tl.to("#scene1",   { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.5, ease: "power2.inOut", overwrite: "auto" }, T12);
-tl.set("#scene1",  { visibility: "hidden" }, T12 + 0.5);
+tl.to("#scene1",  { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.5, ease: "power2.inOut", overwrite: "auto" }, T12);
+tl.set("#scene1", { visibility: "hidden" }, T12 + 0.5);
 tl.fromTo("#scene2",
   { filter: "blur(10px)", scale: 0.97, opacity: 0 },
   { filter: "blur(0px)",  scale: 1,    opacity: 1, duration: 0.5, ease: "power2.inOut" }, T12 + 0.1);
 
-/* ── SCENE 2 entrance ──────────────────────────────────────── */
-tl.from("#s2-hl",   { y: -28, opacity: 0, duration: 0.6, ease: "power3.out" }, T12 + 0.3);
-tl.from("#s2-rule", { scaleX: 0, duration: 0.85, ease: "power2.out" }, T12 + 0.45);
+/* ─── SCENE 2: pill slides UP from below ────────────────────── */
+tl.from("#s2-pill", { y: 80, opacity: 0, duration: 0.7, ease: "expo.out" }, T12 + 0.3);
+tl.from("#s2-hl",   { opacity: 0, duration: 0.35, ease: "power2.out" }, T12 + 0.45);
+tl.from("#s2-rule", { scaleX: 0, duration: 0.85, ease: "power2.out" }, T12 + 0.5);
 
-/* ── TRANSITION 2→3: vertical push (slide up) at t=7.0 ────── */
+/* ─── TRANSITION 2→3: vertical push at t=7.0 ───────────────── */
 var T23 = 7.0;
-tl.to("#scene2",    { y: -1080, duration: 0.45, ease: "power3.inOut" }, T23);
+tl.to("#scene2",   { y: -1080, duration: 0.45, ease: "power3.inOut" }, T23);
 tl.fromTo("#scene3",
   { y: 1080, opacity: 1 },
   { y: 0,    duration: 0.45, ease: "power3.inOut" }, T23);
 
-/* ── SCENE 3 entrance ──────────────────────────────────────── */
-tl.from("#s3-hl",   { y: -28, opacity: 0, duration: 0.65, ease: "expo.out" }, T23 + 0.35);
+/* ─── SCENE 3: pill fades in, words stagger up ──────────────── */
+tl.from("#s3-pill", { opacity: 0, duration: 0.4, ease: "power2.out" }, T23 + 0.3);
+var words = ["#w1","#w2","#w3","#w4","#w5","#w6","#w7","#w8","#w9"];
+words.forEach(function(id, i) {
+  tl.from(id, { y: "100%", opacity: 0, duration: 0.38, ease: "power3.out" }, T23 + 0.35 + i * 0.055);
+});
 tl.from("#s3-rule", { scaleX: 0, duration: 0.9, ease: "power3.out" }, T23 + 0.5);
 
-/* ── TRANSITION 3→4: blur crossfade at t=11.55 ───────────── */
+/* ─── TRANSITION 3→4: blur crossfade at t=11.55 ────────────── */
 var T34 = 11.55;
-tl.to("#scene3",   { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.5, ease: "power2.inOut" }, T34);
+tl.to("#scene3",  { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.5, ease: "power2.inOut" }, T34);
 tl.fromTo("#scene4",
   { filter: "blur(10px)", scale: 0.97, opacity: 0 },
   { filter: "blur(0px)",  scale: 1,    opacity: 1, duration: 0.5, ease: "power2.inOut" }, T34 + 0.1);
 
-/* ── SCENE 4 entrance ──────────────────────────────────────── */
-tl.from("#s4-hl",   { y: -28, opacity: 0, duration: 0.6, ease: "power3.out" }, T34 + 0.3);
+/* ─── SCENE 4: pill scales in from slightly small ───────────── */
+tl.fromTo("#s4-pill",
+  { scale: 0.88, opacity: 0 },
+  { scale: 1,    opacity: 1, duration: 0.65, ease: "back.out(1.4)" }, T34 + 0.3);
+tl.from("#s4-hl",   { opacity: 0, duration: 0.35, ease: "power2.out" }, T34 + 0.5);
 tl.from("#s4-rule", { scaleX: 0, duration: 0.85, ease: "expo.out" }, T34 + 0.45);
 
-/* ── TRANSITION 4→5: vertical push (slide up) at t=16.0 ───── */
+/* ─── TRANSITION 4→5: vertical push at t=16.0 ──────────────── */
 var T45 = 16.0;
-tl.to("#scene4",    { y: -1080, duration: 0.45, ease: "power3.inOut" }, T45);
+tl.to("#scene4",   { y: -1080, duration: 0.45, ease: "power3.inOut" }, T45);
 tl.fromTo("#scene5",
   { y: 1080, opacity: 1 },
   { y: 0,    duration: 0.45, ease: "power3.inOut" }, T45);
 
-/* ── SCENE 5 entrance ──────────────────────────────────────── */
-tl.from("#s5-brand",   { y: 40, opacity: 0, duration: 0.7, ease: "expo.out" }, T45 + 0.4);
-tl.from("#s5-tagline", { y: 28, opacity: 0, duration: 0.6, ease: "power3.out" }, T45 + 0.65);
-tl.from("#s5-sub",     { y: 18, opacity: 0, duration: 0.5, ease: "sine.out" }, T45 + 0.9);
+/* ─── SCENE 5: brand, divider, tagline, sub stagger in ─────── */
+tl.from("#s5-brand",   { y: 50, opacity: 0, duration: 0.7, ease: "expo.out" }, T45 + 0.4);
+tl.fromTo("#s5-div",   { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, T45 + 0.7);
+tl.from("#s5-tagline", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" }, T45 + 0.85);
+tl.from("#s5-sub",     { y: 18, opacity: 0, duration: 0.5, ease: "sine.out" }, T45 + 1.1);
 tl.from("#s5-rule",    { scaleX: 0, duration: 0.9, ease: "power2.out" }, T45 + 0.55);
 
-/* ── SCENE 5 exit: fade to black at t=20.5 (final scene) ──── */
+/* ─── SCENE 5 exit: fade to black (final scene only) ───────── */
 tl.to("#scene5",  { opacity: 0, duration: 1.5, ease: "power2.inOut" }, 20.5);
 tl.set("#scene5", { visibility: "hidden" }, 22.0);
 
