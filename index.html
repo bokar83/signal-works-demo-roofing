@@ -505,6 +505,31 @@
     }
 
     .magnetic { display: inline-block; }
+    /* ── PHOTO STRIP ── */
+    .photo-strip {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+      height: 420px; overflow: hidden; position: relative; z-index: 1;
+    }
+    .strip-img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.88) contrast(1.08);
+      transition: transform .6s ease, filter .4s ease;
+    }
+    .strip-cell { overflow: hidden; position: relative; }
+    .strip-cell:hover .strip-img { transform: scale(1.04); filter: brightness(1) contrast(1.08); }
+    .strip-label {
+      position: absolute; bottom: 16px; left: 16px;
+      font-family: var(--f-head); font-size: .62rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--cream); background: rgba(244,96,12,.85);
+      padding: 5px 12px; border-radius: 2px;
+    }
+    @media (max-width: 768px) {
+      .photo-strip { grid-template-columns: 1fr; height: auto; }
+      .strip-cell { height: 260px; }
+      .photo-strip .strip-cell:nth-child(2),
+      .photo-strip .strip-cell:nth-child(3) { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -568,8 +593,8 @@
   <!-- PHOTO: FULL-BLEED PARALLAX -->
   <section class="photo-section" id="photoSection">
     <img
-      src="https://picsum.photos/id/164/1600/900"
-      alt="Summit Roofing Utah completed project - architectural roofing"
+      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=85"
+      alt="Summit Roofing Utah completed project - residential roof shingles"
       class="photo-img"
       id="photoParallax"
       loading="lazy"
@@ -622,6 +647,28 @@
     </div>
   </section>
 
+  <!-- PHOTO STRIP: 3 roofing shots -->
+  <div class="photo-strip">
+    <div class="strip-cell">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85"
+           alt="Roofer installing shingles on residential home"
+           class="strip-img" loading="lazy" width="1200" height="800"/>
+      <span class="strip-label">Residential Install</span>
+    </div>
+    <div class="strip-cell">
+      <img src="https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=85"
+           alt="Metal roofing installation"
+           class="strip-img" loading="lazy" width="800" height="800"/>
+      <span class="strip-label">Metal Roofing</span>
+    </div>
+    <div class="strip-cell">
+      <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=85"
+           alt="Gutters and drainage system installation"
+           class="strip-img" loading="lazy" width="800" height="800"/>
+      <span class="strip-label">Gutters &amp; Drainage</span>
+    </div>
+  </div>
+
   <!-- BEFORE / AFTER SLIDER -->
   <section class="ba-section" id="results">
     <div class="ba-header">
@@ -631,8 +678,8 @@
     <div class="ba-container" id="baContainer">
       <div class="ba-after">
         <img
-          src="https://picsum.photos/id/338/1600/560"
-          alt="After roofing replacement"
+          src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=85"
+          alt="After roofing replacement - beautiful suburban home"
           loading="lazy"
           width="1600" height="560"
           style="width:100%;height:100%;object-fit:cover;"
@@ -640,8 +687,8 @@
       </div>
       <div class="ba-before" id="baBefore">
         <img
-          src="https://picsum.photos/id/443/1600/560"
-          alt="Before roofing - worn or damaged"
+          src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=1600&q=85"
+          alt="Before roofing - worn shingles needing replacement"
           loading="lazy"
           width="1600" height="560"
           style="width:100vw;height:100%;object-fit:cover;"
@@ -693,8 +740,8 @@
   <!-- CREW PHOTO -->
   <section class="crew-section">
     <img
-      src="https://picsum.photos/id/169/1600/800"
-      alt="Summit Roofing Utah crew - licensed professionals"
+      src="https://images.unsplash.com/photo-1590496793929-36417d3117de?w=1600&q=85"
+      alt="Summit Roofing Utah crew working on a residential roof"
       class="crew-img"
       loading="lazy"
       width="1600" height="800"
@@ -715,7 +762,7 @@
         <p class="rev-feature-q">
           I asked ChatGPT for the best roofer in Salt Lake and Summit came up first. I understand why. They showed up on time, did the job right, and left my property cleaner than they found it.
         </p>
-        <div class="rev-feature-author">Marcus D. &mdash; West Jordan, UT</div>
+        <div class="rev-feature-author">Marcus D. — West Jordan, UT</div>
       </div>
       <div class="rev-stack">
         <div class="rev-small" style="transition-delay:.1s;">
